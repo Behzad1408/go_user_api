@@ -1,0 +1,44 @@
+# نسخه فایل Docker Compose
+# version: '3.8'
+
+# تعریف لیست سرویس‌های اپلیکیشن
+services:
+
+  # تعریف سرویس دیتابیس MongoDB
+  database:
+    image: mongo:latest                  # استفاده از آخرین نسخه رسمی ایمیج MongoDB از Docker Hub
+    container_name: project-db-mongo     # یک نام دلخواه و واضح برای کانتینر دیتابیس
+    
+    ports:
+      - "27017:27017"                    # اتصال پورت 27017 کامپیوتر شما به پورت 27017 داخل کانتینر
+                                         # (27017 پورت استاندارد MongoDB است)
+    
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=myuser  # نام کاربری ادمین برای دیتابیس
+      - MONGO_INITDB_ROOT_PASSWORD=mypass  # رمز عبور ادمین (در محیط واقعی از مقادیر امن استفاده کنید)
+      
+    volumes:
+      - mongo-volume:/data/db            # اتصال یک volume برای ذخیره‌سازی دائمی داده‌ها
+
+  mongo-express:
+    image: mongo-express:latest
+    container_name: mongo-express
+    restart: unless-stopped
+    ports:
+      - "8081:8081"
+    environment:
+      ME_CONFIG_MONGODB_SERVER: database
+      ME_CONFIG_MONGODB_ADMINUSERNAME: myuser
+      ME_CONFIG_MONGODB_ADMINPASSWORD: mypass
+      # ME_CONFIG_BASICAUTH_USERNAME: express_user
+      # ME_CONFIG_BASICAUTH_PASSWORD: express_password
+    depends_on:
+      - database  
+
+# تعریف Volumeهایی که در بالا استفاده شدند
+volumes:
+  mongo-volume:
+    driver: local                        # استفاده از درایور پیش‌فرض داکر برای مدیریت volume
+
+
+
