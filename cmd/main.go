@@ -7,9 +7,17 @@ import (
 	"go_user_api/internal/routes"
 
 	"github.com/gin-gonic/gin"
+	"github.com/joho/godotenv"
 )
 
 func main() {
+
+	//env
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatal("Error loading .env file")
+	}
+
 	// 1. اتصال به MongoDB
 	if err := database.Connect(); err != nil {
 		log.Fatal("خطا در اتصال به دیتابیس:", err)
