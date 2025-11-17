@@ -38,3 +38,10 @@ logs/
 # Temporary files
 tmp/
 temp/
+
+# ----------------------------------
+# Local development and temp files
+# ----------------------------------
+cookies.txt
+signup-payload.json
+login-payload.json
