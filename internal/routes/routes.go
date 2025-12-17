@@ -1,6 +1,3 @@
-// ===== PRODUCTION-READY CODE =====
-// File: internal/routes/routes.go
-
 package routes
 
 import (

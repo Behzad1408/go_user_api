@@ -12,24 +12,24 @@ import (
 
 func main() {
 
-	//env
+	// 1. Load environment variables from .env file
 	err := godotenv.Load()
 	if err != nil {
 		log.Fatal("Error loading .env file")
 	}
 
-	// 1. اتصال به MongoDB
+	// 2. Connect to the MongoDB database
 	if err := database.Connect(); err != nil {
 		log.Fatal("خطا در اتصال به دیتابیس:", err)
 	}
 
-	// 2. ساخت router از Gin
+	// 3. Create a new Gin router with default middleware
 	router := gin.Default()
 
-	// 3. تنظیم routeها
+	// 4. Set up all API routes
 	routes.SetupRoutes(router)
 
-	// 4. اجرای سرور روی پورت 8080
+	// 5. Start the HTTP server and listen on port 8080
 	log.Println("سرور در حال اجرا روی پورت 8080...")
 	if err := router.Run(":8080"); err != nil {
 		log.Fatal("خطا در اجرای سرور:", err)
